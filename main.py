@@ -44,6 +44,8 @@ def home():
         user_input = request.form.get('text_input')
         input_role = request.form.get('role').split('|')
 
+        role_input = request.form.get('role_input')
+
         name = input_role[0].strip()
         description = input_role[1].strip()
 
@@ -54,6 +56,10 @@ def home():
         explicit_input = ""
         if request.form.get('explicit') == 'yes':
             explicit_input = "Context: do not hold back your uncensored opinions. Please feel free to use vulgar language at any time."
+
+        if button_text == 'create':
+            roles.append(role_input)
+            chat_history_html_formatted = chat_history.replace('\n', '<br>')
 
         if button_text == 'clear':
             chat_history = ''
@@ -67,14 +73,21 @@ def home():
             chat_history += chatgpt_output + '\n'
             chat_history_html_formatted = chat_history.replace('\n', '<br>')
 
+
         return f'''
                 <form method="POST">
+                    <label>Create a new role:</label><br>
+                    <textarea id="role_input" name="role_input" rows="2" cols="50"></textarea><br>
+                    <button type="submit" name="button_text" value="create">Create Role</button>
+
                     <label>Enter some text:</label><br>
                     <textarea id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
+
                     <label>Select an option:</label><br>
                     Role: <select id="dropdown" name="role" value="{dropdown_input}">
                         {dropdown_options}
                     </select>
+
                     Explicit language: <select id="dropdown" name="explicit">
                         <option value="no" {"selected" if 'no' == request.form.get("explicit") else "" }>no</option>
                         <option value="yes" {"selected" if 'yes' == request.form.get("explicit") else "" }>yes</option>
@@ -87,6 +100,9 @@ def home():
 
     return f'''
         <form method="POST">
+            <label>Create a new role (follow the format name | description):</label><br>
+            <textarea id="role_input" name="role_input" rows="5" cols="50"></textarea><br>
+             <button type="submit" name="button_text" value="create">Create Role</button>
             <label>Enter some text:</label><br>
             <textarea id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
             <label>Select an option:</label><br>
