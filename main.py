@@ -60,8 +60,9 @@ def home():
         if button_text == 'create':
             roles.append(role_input)
             chat_history_html_formatted = chat_history.replace('\n', '<br>')
+            dropdown_options = "\n".join([f'<option value="{role}" {"selected" if role == request.form.get("role") else "" }>{role}</option>' for role in roles])
 
-        if button_text == 'clear':
+        elif button_text == 'clear':
             chat_history = ''
             chat_history_html_formatted = ''
 
@@ -78,7 +79,7 @@ def home():
                 <form method="POST">
                     <label>Create a new role:</label><br>
                     <textarea id="role_input" name="role_input" rows="2" cols="50"></textarea><br>
-                    <button type="submit" name="button_text" value="create">Create Role</button>
+                    <button type="submit" name="button_text" value="create">Create Role</button><br><br>
 
                     <label>Enter some text:</label><br>
                     <textarea id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
@@ -102,7 +103,7 @@ def home():
         <form method="POST">
             <label>Create a new role (follow the format name | description):</label><br>
             <textarea id="role_input" name="role_input" rows="5" cols="50"></textarea><br>
-             <button type="submit" name="button_text" value="create">Create Role</button>
+            <button type="submit" name="button_text" value="create">Create Role</button><br><br>
             <label>Enter some text:</label><br>
             <textarea id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
             <label>Select an option:</label><br>
@@ -120,3 +121,5 @@ def home():
 
 if __name__ == '__main__':
     app.run()
+    
+
