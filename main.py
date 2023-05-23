@@ -77,7 +77,7 @@ def home():
 
         return f'''
                 <form method="POST">
-                    <label>Create a new role:</label><br>
+                    <label>Create a new role (format: name | description):</label><br>
                     <textarea id="role_input" name="role_input" rows="2" cols="50"></textarea><br>
                     <button type="submit" name="button_text" value="create">Create Role</button><br><br>
 
@@ -101,7 +101,7 @@ def home():
 
     return f'''
         <form method="POST">
-            <label>Create a new role (follow the format name | description):</label><br>
+            <label>Create a new role (format: name | description):</label><br>
             <textarea id="role_input" name="role_input" rows="5" cols="50"></textarea><br>
             <button type="submit" name="button_text" value="create">Create Role</button><br><br>
             <label>Enter some text:</label><br>
