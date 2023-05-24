@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, request
+from flask import Flask, request, render_template
 import openai
 import os
 
@@ -77,59 +77,9 @@ def home():
             chat_history_html_formatted = chat_history.replace('\n', '<br>')
 
 
-        return f'''
-                <html
-                    style = "background-color: #000000;"
-                >
-                    <form 
-                        method="POST"
-                        style = "text-color: white;"
-                    >
-                        <label
-                            style = "color: white;"
-                        >
-                            Create a new role (format: name | description):
-                        </label><br>
-                        <textarea id="role_input" name="role_input" rows="2" cols="50"></textarea><br>
-                        <button 
-                            style = ""
-                            type="submit" 
-                            name="button_text" 
-                            value="create">Create Role
-                        </button><br><br>
-
-                        <label
-                            style = "color: white;"
-                        >
-                            Enter some text:
-                        </label><br>
-                        <textarea id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
-
-                        <label
-                            style = "color: white;"
-                        >
-                            Select an option:
-                        </label><br>
-                        <p style = "color: white; display: inline;">Role: </p><select id="dropdown" name="role" value="{dropdown_input}">
-                            {dropdown_options}
-                        </select>
-
-                        <p style = "color: white; display: inline;">Explicit language: </p><select id="dropdown" name="explicit">
-                            <option value="no" {"selected" if 'no' == request.form.get("explicit") else "" }>no</option>
-                            <option value="yes" {"selected" if 'yes' == request.form.get("explicit") else "" }>yes</option>
-                        </select><input type="hidden" id="history" name="history" value="{chat_history}"><br><br>
-                        <button type="submit" name="button_text" value="submit">Submit</button>
-                        <button type="submit" name="button_text" value="clear">Clear Chat history</button>
-                    </form>
-                <br>
-                <div
-                    style = 
-                        "color: #20C20E;"
-                >
-                    {chat_history_html_formatted}
-                </div>
-            </html>
-            '''
+        return render_template("template1.html", dropdown_input=dropdown_input, dropdown_options=dropdown_options, chat_history=chat_history, chat_history_html_formatted=chat_history_html_formatted)
+                
+            
 
     return f'''
         <html
