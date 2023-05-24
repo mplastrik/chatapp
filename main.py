@@ -33,6 +33,7 @@ def chatCompletion(user_input, impersonated_role, explicit_input, chat_history):
 @app.route('/', methods=['GET', 'POST'])
 def home():
     dropdown_options = "\n".join([f'<option value ="{role}">{role}</option>' for role in roles])
+    dropdown_options_markup = Markup(dropdown_options)
 
     if request.method == 'POST':
         dropdown_options = "\n".join([f'<option value="{role}" {"selected" if role == request.form.get("role") else "" }>{role}</option>' for role in roles])
@@ -76,51 +77,14 @@ def home():
             chat_history += f'\nUser: {text_input}\n'
             chat_history += chatgpt_output + '\n'
             chat_history_html_formatted = chat_history.replace('\n', '<br>')
+            chat_history_markup = Markup(chat_history_html_formatted)
 
        
-        return render_template("template1.html", dropdown_input=dropdown_input, dropdown_options_markup=dropdown_options_markup, dropdown_options=dropdown_options, chat_history=chat_history, chat_history_html_formatted=chat_history_html_formatted)
+        return render_template("template1.html", dropdown_input=dropdown_input, dropdown_options_markup=dropdown_options_markup, chat_history_markup=chat_history_markup)
                 
             
 
-    return f'''
-        <html
-            style = "background-color: #000000;"
-        >
-            <form method="POST">
-                <label
-                    style = "color: white;"
-                >
-                    Create a new role (format: name | description):
-                </label><br>
-                <textarea id="role_input" name="role_input" rows="5" cols="50"></textarea><br>
-                <button 
-                    style = ""
-                    type="submit" 
-                    name="button_text" 
-                    value="create">Create Role
-                </button><br><br>
-                <label
-                    style = "color: pink;"
-                >
-                    Enter some text:
-                </label><br>
-                <textarea id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
-                <label
-                    style = "color: white;"
-                >
-                    Select an option:
-                </label><br>
-                <p style = "color: white; display: inline;">Role: </p><select id="dropdown" name="role">
-                    {dropdown_options}
-                </select>
-                <p style = "color: white; display: inline;">Explicit language: </p><select id="dropdown" name="explicit">
-                    <option value="no">no</option>
-                    <option value="yes">yes</option>
-                </select><input type="hidden" id="history" name="history" value=" "><br><br>
-                <button type="submit" name="button_text" value="submit">Submit</button>
-            </form>
-        </html>
-    '''
+    return render_template("template2.html", dropdown_options_markup=dropdown_options_markup)
 
 
 if __name__ == '__main__':
