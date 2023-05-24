@@ -117,10 +117,15 @@ def home():
                         <p style = "color: white; display: inline;">Explicit language: </p><select id="dropdown" name="explicit">
                             <option value="no" {"selected" if 'no' == request.form.get("explicit") else "" }>no</option>
                             <option value="yes" {"selected" if 'yes' == request.form.get("explicit") else "" }>yes</option>
-                        </select><input type="hidden" id="history" name="history" value="{chat_history}"><br><br>
+                        </select>
+
+                        <input type="hidden" id="history" name="history" value="{chat_history}"><br><br>
+
                         <button type="submit" name="button_text" value="submit">Submit</button>
                         <button type="submit" name="button_text" value="clear">Clear Chat history</button>
+
                     </form>
+                    
                 <br>
                 <div
                     style = 
