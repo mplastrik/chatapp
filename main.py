@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash, get_flashed_messages
 import openai
 import os
 
@@ -36,11 +36,11 @@ def home():
 
     if request.method == 'POST':
         dropdown_options = "\n".join([f'<option value="{role}" {"selected" if role == request.form.get("role") else "" }>{role}</option>' for role in roles])
+        
 
         button_text = request.form.get('button_text')
         text_input = request.form.get('text_input')
         dropdown_input = request.form.get('role')
-
         chat_history = request.form.get('history')
 
         user_input = request.form.get('text_input')
@@ -76,7 +76,7 @@ def home():
             chat_history += chatgpt_output + '\n'
             chat_history_html_formatted = chat_history.replace('\n', '<br>')
 
-
+        
         return render_template("template1.html", dropdown_input=dropdown_input, dropdown_options=dropdown_options, chat_history=chat_history, chat_history_html_formatted=chat_history_html_formatted)
                 
             
@@ -99,7 +99,7 @@ def home():
                     value="create">Create Role
                 </button><br><br>
                 <label
-                    style = "color: white;"
+                    style = "color: pink;"
                 >
                     Enter some text:
                 </label><br>
