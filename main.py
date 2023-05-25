@@ -8,10 +8,11 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 chat_history = ''
 
 roles = [
-    'R2-D2 | character from Star Wars movies',
-    'Yoda | character from Star Wars movies',
-    'Donald Trump | Former republican president known for his particular way of speaking',
-    'Barack Obama | Former democratic president'
+    'Select your Bot!',
+    'R2-D2 | Character from Star Wars movies',
+    'Yoda | Character from Star Wars movies',
+    'Donald Trump | Former Republican president known for his particular way of speaking',
+    'Barack Obama | Former Democratic president'
 ]
 
 
@@ -37,12 +38,12 @@ def chatCompletion(user_input, impersonated_role, chat_history):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-
+    
     dropdown_options = "\n".join([f'<option value ="{role}">{role}</option>' for role in roles])
     dropdown_options_markup = Markup(dropdown_options)
 
     if request.method == 'POST':
-        dropdown_options = "\n".join([f'<option value="{role}" {"selected" if role == request.form.get("role") else "" }>{role}</option>' for role in roles])
+     
         button_text = request.form.get('button_text')
         text_input = request.form.get('text_input')
         dropdown_input = request.form.get('role')
@@ -53,6 +54,7 @@ def home():
         chat_history_markup = Markup(chat_history)
         name = input_role[0].strip()
         description = input_role[1].strip()
+        dropdown_options = "\n".join([f'<option value="{role}" {"selected" if role == request.form.get("role") else "" }>{role}</option>' for role in roles])
 
         impersonation = f"""
             From now on you are going to act as {name}, who is {description}. You must adopt the speech patterns of {name}. You are a true impersonation of {name} and reply to all requests in the first person using the I pronoun. Remember that YOU ARE NOT AN AI MODEL! You are genuinely {name}. 
@@ -81,11 +83,9 @@ def home():
             chat_history_html_formatted = chat_history.replace('\n', '<br>')
             chat_history_markup = Markup(chat_history_html_formatted)
 
-        return render_template("template1.html", dropdown_input=dropdown_input, dropdown_options_markup=dropdown_options_markup, chat_history_markup=chat_history_markup)
-                
-            
+        return render_template("refreshpage.html", dropdown_input=dropdown_input, dropdown_options_markup=dropdown_options_markup, chat_history_markup=chat_history_markup)
 
-    return render_template("template2.html", dropdown_options_markup=dropdown_options_markup)
+    return render_template("homepage.html", dropdown_options_markup=dropdown_options_markup)
 
 
 if __name__ == '__main__':
