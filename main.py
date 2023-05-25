@@ -1,4 +1,4 @@
-import flask
+
 from flask import Flask, request, render_template, Markup
 import openai
 import os
@@ -50,7 +50,7 @@ def home():
         input_role = request.form.get('role').split('|')
         global chat_history
         role_input = request.form.get('role_input')
-
+        chat_history_markup = Markup(chat_history)
         name = input_role[0].strip()
         description = input_role[1].strip()
 
@@ -71,6 +71,7 @@ def home():
             chat_history_markup = Markup(chat_history_html_formatted)
 
         if button_text == 'submit':
+            
             chatgpt_raw_output = chatCompletion(user_input, impersonation, chat_history).replace(f'{name}:', '')
             chatgpt_output = f'{name}: {chatgpt_raw_output}'
 
