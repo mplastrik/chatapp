@@ -9,7 +9,6 @@
         </label><br>
         <textarea id="role_input" name="role_input" rows="5" cols="50"></textarea><br>
         <button 
-            style = ""
             type="submit" 
             name="button_text" 
             value="create">Create Role
@@ -28,10 +27,8 @@
         <p style = "color: white; display: inline;">Role: </p><select id="dropdown" name="role">
             {{ dropdown_options_markup }}
         </select>
-        <p style = "color: white; display: inline;">Explicit language: </p><select id="dropdown" name="explicit">
-            <option value="no">no</option>
-            <option value="yes">yes</option>
-        </select><input type="hidden" id="history" name="history" value=" "><br><br>
+        
+        <input type="hidden" id="history" name="history" value=" "><br><br>
         <button type="submit" name="button_text" value="submit">Submit</button>
     </form>
 </html>
