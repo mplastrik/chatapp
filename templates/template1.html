@@ -32,12 +32,14 @@
 
         <p style = "color: white; display: inline;">Role: </p>
 
-        <select id="dropdown" name="role" value={{dropdown_input}}>
+        <select id="dropdown" name="role" value="{{dropdown_input}}">
             {{ dropdown_options_markup }}
 
         </select>
-
+        
         <input type="hidden" id="history" name="history" value="{{chat_history}}"><br><br>
+       
+        
         <button type="submit" name="button_text" value="submit">Submit</button>
         <button type="submit" name="button_text" value="clear">Clear Chat history</button>
 
