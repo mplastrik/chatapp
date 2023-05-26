@@ -1,55 +1,47 @@
-<html
-    style = "background-color: #000000;"
->
-    <form 
-        method="POST"
-    >
-        <label
-            style = "color: white;"
-        >
-            Create a new role (format: name | description):
-        </label><br>
-        <textarea id="role_input" name="role_input" rows="2" cols="50"></textarea><br>
-        <button 
-            type="submit" 
-            name="button_text" 
-            value="create">Create Role
-        </button><br><br>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href= {{ url_for("static", filename="styles/css/refreshpage.css") }} >
+    </head>
+    <body>
+        <form method="POST">
+            <label>
+                Create a new role (format: name | description):
+            </label><br>
+            <textarea id="role_input" name="role_input" rows="2" cols="50"></textarea><br>
+            <button 
+                type="submit" 
+                name="button_text" 
+                value="create">Create Role
+            </button><br><br>
 
-        <label
-            style = "color: white;"
-        >
-            Enter some text:
-        </label><br>
+            <label>
+                Enter some text:
+            </label><br>
 
-        <textarea id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
+            <textarea id="text_input" name="text_input" rows="5" cols="50"></textarea><br>
 
-        <label
-            style = "color: white;"
-        >
-            Select an option:
-        </label><br>
+            <label>
+                Select an option:
+            </label><br>
 
-        <p style = "color: white; display: inline;">Role: </p>
+            <p>Role: </p>
 
-        <select id="dropdown" name="role" value="{{dropdown_input}}">
-            {{ dropdown_options_markup }}
+            <select id="dropdown" name="role" value="{{dropdown_input}}">
+                {{ dropdown_options_markup }}
 
-        </select>
+            </select>
+            
+            <input type="hidden" id="history" name="history" value="{{chat_history}}"><br><br>
         
-        <input type="hidden" id="history" name="history" value="{{chat_history}}"><br><br>
-       
-        
-        <button type="submit" name="button_text" value="submit">Submit</button>
-        <button type="submit" name="button_text" value="clear">Clear Chat history</button>
+            
+            <button type="submit" name="button_text" value="submit">Submit</button>
+            <button type="submit" name="button_text" value="clear">Clear Chat history</button>
 
-    </form>
-    <br>
-    <div
-        style = 
-            "color: #20C20E;"
-    >
-        {{chat_history_markup}}
+        </form>
+        <br>
+        <div>
+            {{chat_history_markup}}
 
-    </div>
+        </div>
+    </body>
 </html>

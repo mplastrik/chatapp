@@ -1,0 +1,16 @@
+body {
+    background-color: #000000;
+}
+
+label {
+    color: #ffffff;
+}
+
+p {
+    display: inline;
+    color: white;
+}
+
+div {
+    color: #20C20E;
+}

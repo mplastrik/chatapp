@@ -48,7 +48,10 @@ def home():
         text_input = request.form.get('text_input')
         dropdown_input = request.form.get('role')
         user_input = request.form.get('text_input')
-        input_role = request.form.get('role').split('|')
+        try: 
+            type(input_role = request.form.get('role').split('|')) == list
+        except: 
+            input_role = ['','']
         global chat_history
         role_input = request.form.get('role_input')
         chat_history_markup = Markup(chat_history)
@@ -73,15 +76,20 @@ def home():
             chat_history_markup = Markup(chat_history_html_formatted)
 
         if button_text == 'submit':
-            
-            chatgpt_raw_output = chatCompletion(user_input, impersonation, chat_history).replace(f'{name}:', '')
-            chatgpt_output = f'{name}: {chatgpt_raw_output}'
+            if input_role[0] == '':
+                chat_history += "Don't forget to select who you want to speak to! I have no identity otherwise!! Help me!!! Choose! Please!!! WHO AM I????????"
+                chat_history_html_formatted = chat_history.replace('\n', '<br>')
+                chat_history_markup = Markup(chat_history_html_formatted)
 
-            chat_history += (f'\nUser: {text_input}\n\n')
-            chat_history += (chatgpt_output + '\n')
-           
-            chat_history_html_formatted = chat_history.replace('\n', '<br>')
-            chat_history_markup = Markup(chat_history_html_formatted)
+            else:
+                chatgpt_raw_output = chatCompletion(user_input, impersonation, chat_history).replace(f'{name}:', '')
+                chatgpt_output = f'{name}: {chatgpt_raw_output}'
+
+                chat_history += (f'\nUser: {text_input}\n\n')
+                chat_history += (chatgpt_output + '\n')
+            
+                chat_history_html_formatted = chat_history.replace('\n', '<br>')
+                chat_history_markup = Markup(chat_history_html_formatted)
 
         return render_template("refreshpage.html", dropdown_input=dropdown_input, dropdown_options_markup=dropdown_options_markup, chat_history_markup=chat_history_markup)
 
