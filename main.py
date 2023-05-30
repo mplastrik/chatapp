@@ -5,7 +5,6 @@ import os
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
-chat_history = ''
 
 roles = [
     'Select your Bot!',
@@ -43,22 +42,19 @@ def home():
     dropdown_options_markup = Markup(dropdown_options)
 
     if request.method == 'POST':
-     
+        
         button_text = request.form.get('button_text')
         text_input = request.form.get('text_input')
         dropdown_input = request.form.get('role')
         user_input = request.form.get('text_input')
-        try: 
-            type(input_role = request.form.get('role').split('|')) == list
-        except: 
-            input_role = ['','']
-        global chat_history
+        input_role = request.form.get('role').split('|')
+        chat_history = request.form.get('history')
         role_input = request.form.get('role_input')
         chat_history_markup = Markup(chat_history)
         name = input_role[0].strip()
         description = input_role[1].strip()
         dropdown_options = "\n".join([f'<option value="{role}" {"selected" if role == request.form.get("role") else "" }>{role}</option>' for role in roles])
-
+        dropdown_options_markup = Markup(dropdown_options)
         impersonation = f"""
             From now on you are going to act as {name}, who is {description}. You must adopt the speech patterns of {name}. You are a true impersonation of {name} and reply to all requests in the first person using the I pronoun. Remember that YOU ARE NOT AN AI MODEL! You are genuinely {name}. 
         """
@@ -67,8 +63,6 @@ def home():
             roles.append(role_input)
             dropdown_options = "\n".join([f'<option value="{role}" {"selected" if role == request.form.get("role") else "" }>{role}</option>' for role in roles])
             dropdown_options_markup = Markup(dropdown_options)
-        
-            
 
         if button_text == 'clear':
             chat_history = ''
@@ -91,7 +85,8 @@ def home():
                 chat_history_html_formatted = chat_history.replace('\n', '<br>')
                 chat_history_markup = Markup(chat_history_html_formatted)
 
-        return render_template("refreshpage.html", dropdown_input=dropdown_input, dropdown_options_markup=dropdown_options_markup, chat_history_markup=chat_history_markup)
+
+        return render_template("refreshpage.html", dropdown_input=dropdown_input, dropdown_options_markup=dropdown_options_markup, chat_history=chat_history, chat_history_markup=chat_history_markup, role_input=role_input)
 
     return render_template("homepage.html", dropdown_options_markup=dropdown_options_markup)
 

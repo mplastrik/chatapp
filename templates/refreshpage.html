@@ -26,12 +26,11 @@
 
             <p>Role: </p>
 
-            <select id="dropdown" name="role" value="{{dropdown_input}}">
+            <select id="dropdown" name="role" value="{{ dropdown_input }}">
                 {{ dropdown_options_markup }}
-
             </select>
             
-            <input type="hidden" id="history" name="history" value="{{chat_history}}"><br><br>
+            <input type="hidden" id="history" name="history" value="{{ chat_history }}"><br><br>
         
             
             <button type="submit" name="button_text" value="submit">Submit</button>
@@ -41,7 +40,6 @@
         <br>
         <div>
             {{chat_history_markup}}
-
         </div>
     </body>
 </html>
