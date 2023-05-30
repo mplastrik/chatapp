@@ -44,17 +44,23 @@ def home():
     if request.method == 'POST':
         
         button_text = request.form.get('button_text')
-        text_input = request.form.get('text_input')
+
         dropdown_input = request.form.get('role')
-        user_input = request.form.get('text_input')
         input_role = request.form.get('role').split('|')
+        text_input = request.form.get('text_input')
+        user_input = request.form.get('text_input')
+
+       
         chat_history = request.form.get('history')
         role_input = request.form.get('role_input')
         chat_history_markup = Markup(chat_history)
+
         name = input_role[0].strip()
         description = input_role[1].strip()
+
         dropdown_options = "\n".join([f'<option value="{role}" {"selected" if role == request.form.get("role") else "" }>{role}</option>' for role in roles])
         dropdown_options_markup = Markup(dropdown_options)
+
         impersonation = f"""
             From now on you are going to act as {name}, who is {description}. You must adopt the speech patterns of {name}. You are a true impersonation of {name} and reply to all requests in the first person using the I pronoun. Remember that YOU ARE NOT AN AI MODEL! You are genuinely {name}. 
         """
